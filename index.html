@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: "#da373d",
+            },
+          },
+        },
+      };
+    </script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="loadingOverlay">
+      <div id="progressBar">
+        <div id="textMask">MAGIA</div>
+      </div>
+    </div>
+
+    <section class="bg-white h-screen hero--section container-css" id="home">
+      <div class="relative isolate px-6 pt-14 lg:px-8 h-full">
+        <div
+          class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+          aria-hidden="true"
+        >
+          <div
+            class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+            style="
+              clip-path: polygon(
+                74.1% 44.1%,
+                100% 61.6%,
+                97.5% 26.9%,
+                85.5% 0.1%,
+                80.7% 2%,
+                72.5% 32.5%,
+                60.2% 62.4%,
+                52.4% 68.1%,
+                47.5% 58.3%,
+                45.2% 34.5%,
+                27.5% 76.7%,
+                0.1% 64.9%,
+                17.9% 100%,
+                27.6% 76.8%,
+                76.1% 97.7%,
+                74.1% 44.1%
+              );
+            "
+          ></div>
+        </div>
+        <div
+          data-aos="fade-right"
+          class="grid max-w-screen-xl container-css lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 h-full"
+        >
+          <div class="mr-auto place-self-center lg:col-span-8">
+            <h1
+              class="hero--section__title max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-black"
+            >
+              Lorem, ipsum.
+              <span class="custom-text text-violet-400"
+                >Lorem, ipsum dolor.</span
+              >
+            </h1>
+            <p
+              class="hero--section__title max-w-2xl mb-6 font-light text-gray-900 lg:mb-8 md:text-lg lg:text-xl lg:pt-[1rem] dark:text-gray-400"
+            >
+              Lorem ipsum dolor sit amet.
+              <strong class="font-medium text-violet-700"
+                >Lorem ipsum dolor sit.</strong
+              >, Lorem ipsum dolor sit.
+              <strong class="font-medium text-violet-700"
+                >Lorem ipsum dolor sit amet consectetur.</strong
+              >, Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non
+              ut officiis accusamus harum debitis omnis sunt dolorem
+              exercitationem itaque deleniti?
+            </p>
+          </div>
+          <div class="lg:col-span-4 lg:flex hero--section__video-container">
+            <img src="/assets/pexelsfoto.jpg" alt="" class="imgGRANDE" />
+          </div>
+        </div>
+      </div>
+    </section>
+    <div id="gallery">
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 container-css">
+        <div class="category-shoes overlay-animation">
+          <image
+            class="h-auto max-w-full rounded-lg"
+            src="/assets/bruja caldero 2 resize.gif"
+            alt=""
+          />
+        </div>
+        <div class="overlay-animation category-shoes">
+          <image
+            class="h-auto max-w-full rounded-lg"
+            src="/assets/bruja caldero2.gif"
+            alt=""
+          />
+        </div>
+      </div>
+    </div>
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://code.createjs.com/1.0.0/preloadjs.min.js"></script>
+    <script>
+      AOS.init();
+    </script>
+    <script>
+      gsap.to("#textMask", {
+        duration: 1, // Duración de la animación en segundos
+        opacity: 1, // Anima la opacidad a 1 (visible)
+        scale: 1.5, // Aumenta el tamaño a 1.5 veces el original
+        ease: "power2.out", // Tipo de efecto de animación
+        onComplete: function () {
+          // Opcional: una función que se ejecuta cuando la animación termina
+          console.log("Animación completada");
+        },
+      });
+      let loadingOverlay = document.getElementById("loadingOverlay");
+
+      if (window.createjs) {
+        const queue = new createjs.LoadQueue(false);
+
+        // Escuchar el progreso de la carga
+        queue.on("progress", function (event) {
+          let progress = (event.progress * 100).toFixed(2);
+          console.log("Progreso de carga:", progress + "%");
+          document.getElementById("textMask").style.clipPath = `inset(0 ${
+            100 - progress
+          }% 0 0)`;
+        });
+
+        // Escuchar cuando todos los archivos estén cargados
+        queue.on("complete", function () {
+          // Inicia la animación después de un breve retraso
+          setTimeout(function () {
+            loadingOverlay.classList.add("loadingOverlay-hidden");
+            // Espera hasta que la animación termine para ocultar completamente
+            setTimeout(function () {
+              loadingOverlay.style.display = "none";
+            }, 500); // Debe coincidir con la duración de tu animación
+          }, 500); // Ajusta este tiempo de demora si es necesario
+        });
+
+        // Escuchar cuando un archivo individual ha sido cargado
+        queue.on("fileload", function (event) {
+          console.log("Archivo cargado:", event.item.src);
+        });
+
+        // Escuchar errores
+        queue.on("error", function (event) {
+          console.error("Error al cargar el archivo:", event.data.src);
+        });
+
+        // Precargar las imágenes
+        queue.loadManifest([
+          { id: "image1", src: "/assets/pexelsfoto.jpg" },
+          { id: "image2", src: "/assets/bruja caldero menor peso.gif" },
+          { id: "image3", src: "/assets/bruja2 fondonegro.png" },
+          { id: "image4", src: "https://picsum.photos/id/434/300/300" },
+          { id: "image5", src: "https://picsum.photos/id/101/300/300" },
+        ]);
+      } else {
+        console.error("PreloadJS no se ha cargado correctamente.");
+      }
+    </script>
+  </body>
+</html>
